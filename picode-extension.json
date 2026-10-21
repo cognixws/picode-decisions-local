@@ -1,0 +1,15 @@
+{
+  "id": "picode-decisions-local",
+  "name": "Local model fast decisions",
+  "version": "0.1.0",
+  "apiVersion": 13,
+  "publisher": "COGNIX[SE]",
+  "description": "Answers COGNIX[WS]'s fast decisions with a model on this computer, served by llama.cpp, Ollama or LM Studio: which element matches what an agent described, and yes/no questions. Nothing leaves this computer. Its answers are advice: agents look before they act.",
+  "activation": { "instance": true },
+  "settings": [
+    { "key": "url", "label": "Model server", "type": "text", "default": "http://127.0.0.1:8080/v1", "description": "The OpenAI-compatible address of a model server on this computer: llama.cpp's llama-server is http://127.0.0.1:8080/v1, Ollama http://127.0.0.1:11434/v1, LM Studio http://127.0.0.1:1234/v1." },
+    { "key": "model", "label": "Model", "type": "text", "description": "The model's name, when the server serves more than one (Ollama needs it, e.g. qwen3:4b-instruct)." }
+  ],
+  "process": { "command": "node", "args": ["${extensionDir}/server.mjs"] },
+  "decisions": { "name": "Local model", "kinds": ["choice", "score", "noul"], "reach": "computer", "advice": true, "timeoutMs": 15000, "decidePath": "/decide", "statusPath": "/status" }
+}
